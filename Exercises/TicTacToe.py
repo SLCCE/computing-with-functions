@@ -23,31 +23,13 @@ def draw_segment(x1, y1, x2, y2):
     t.goto(x2, y2)
     t.up()
 
-# ==============================================================================================================================
-# ==============================================================================================================================
-# ==============================================================================================================================
 def draw_board():
-    '''
-    Exercise: Draw the game board!
-    draw_segment(a, b, c, d) draws a segment from the point (a, b) to (c, d)
-    Use the draw_segment function to draw the 4 segments:
-    horizontal lines: 
-        (-200, 80) to (200, 80)
-        (-200, -80) to (200, -80)
-    vertical lines:
-        (-80, -200) to (-80, 200)
-        (80, -200) to (80, 200)
-    The first one has already been done as an example
-    '''
     # horizontal
-    draw_segment(-200, 80, 200, 80)
-    # ...
+    draw_segment(-BL, SQ, BL, SQ)
+    draw_segment(-BL, -SQ, BL, -SQ)
     # vertical
-    # ...
-    # ...
-# ==============================================================================================================================
-# ==============================================================================================================================
-# ==============================================================================================================================
+    draw_segment(-SQ, -BL, -SQ, BL)
+    draw_segment(SQ, -BL, SQ, BL)
 
 def determine_square(x, y):
     '''
@@ -187,9 +169,3 @@ screen.onscreenclick(handle_click)
 
 # Keep the window open until closed
 screen.mainloop()  # event loop
-
-'''
-possible exercises:
-* finish the game
-* prevent moves after someone wins
-'''
