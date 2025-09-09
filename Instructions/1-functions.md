@@ -18,13 +18,19 @@ Here's how to call the function:
 f()
 ```
 
-Let's take a look at a function that takes an input and doubles it. 
+Let's take a look at a function that takes an input, doubles it, and returns the doubled value. 
 ```python
 def g(x):
     return 2 * x
 ```
 
-To use it, we can set a variable equal to the result of the function. 
+To pass in a parameter, we can pass a value into the parentheses of the function we call. 
+```python
+g(3)
+g(3.14)
+```
+
+To use the return value, we can set a variable equal to the result of the function. 
 
 ```python
 n = 3
@@ -39,9 +45,17 @@ def h(s):
     # if a string is passed in, it gets concatenated
     return s + s
 single = "asdf"
-# double = asdfasdf
 double = h(single)
+# double = asdfasdf
 x = 1
-# y = 2
 y = h(x)
+# y = 2
+```
+
+Here's a function that doesn't return any value and prints what's entered 10 times:
+```python
+def printInput(s):
+    for i in range(10):
+        print("Your input was", s)
+printInput("Hello World!")
 ```
