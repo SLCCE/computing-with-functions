@@ -1,4 +1,5 @@
 import turtle
+import Character
 
 class Board:
     def __init__(self, initialBoard):
@@ -14,6 +15,7 @@ class Board:
         screen.setup(self.board_width + 200, self.board_height + 200)
         turtle.speed(0)
         self.draw_board()
+        self.draw_bad_guy(self.board_width + 250, self.board_height + 250, 30)
         turtle.done()
     
     def draw_board(self):
@@ -31,6 +33,16 @@ class Board:
         for _ in range(4):
             turtle.fd(self.square_size)
             turtle.left(90)
+    
+    def draw_bad_guy(self, x, y, radius):
+        turtle.color("red")
+        turtle.circle(radius)
+        turtle.color("black")
+
+    def draw_good_guy(self, x, y, radius):
+        turtle.color("yellow")
+        turtle.circle(radius)
+        turtle.color("black")
 
 test = [[1, 2, 3],
         [4, 5, 6],
