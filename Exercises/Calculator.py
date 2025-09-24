@@ -8,7 +8,7 @@ def add (value1, value2):
 # ============================================================================================================================
 
 # EXERCISE: Fill in the missing functions so the calculator can work properly.
-# Feel free to user add as a model.
+# Feel free to use add as a model.
 
 def subtract ():
     return
@@ -30,6 +30,8 @@ def divide ():
 # ============================================================================================================================
 # ============================================================================================================================
 # ============================================================================================================================
+
+from DoNotTouch.test_calculator import *
 
 # Converts value to an int or float returns False if thats not possible
 def convert_value_number (value):
@@ -157,7 +159,7 @@ def evaluate_expression (expression):
     return expression[0]
 
 # Reads user input of expression and checks that its in the proper form, calls evaluate_expression
-def calculator ():
+def runCalculator ():
     # Set of operators that the calculator recognizes
     valid_operators = ['+', '-', '*', '/', '//', '%', '^']
     # Continually prompts user for an expression to evaluate
@@ -166,11 +168,14 @@ def calculator ():
         error = False
         # Reads user input, strips excess whitespace, and splits each term into an entry in a list
         expression = input('Enter expression: ').strip().split()
+        # Check for quit command
+        if expression[0] == 'quit' or expression[0] == 'q':
+            exit(0)
+        elif expression[0] == 'test' or expression[0] == 't':
+            testAll()
+            continue
         # Check that each term is a legal symbol or number
         for index, term in enumerate(expression):
-            # Check for quit command
-            if term == 'quit' or term == 'q':
-                exit(0)
             # Check that expression does not start with an operator
             if index == 0 and expression[index] in valid_operators:
                 print(f"Expression cannot start with: {expression[index]}")
@@ -202,13 +207,17 @@ def calculator ():
         # Print result from evaluated expression
         print(evaluate_expression(expression))
 
+def main ():
+    print('''Welcome to the Calculator
+    There are some rules for using this calculator:
+    \t1. Each term must have spaces separating terms (eg 5 + 5 not 5+5)
+    \t2. This calculator only recognizes numbers and this set of symbols (+, -, *, /, //, %, ^)
+    \t3. Type \'t\' or \'test\' to test your code
+    \t4. Type \'q\' or \'quit\' to exit the program''')
 
-print('''Welcome to the Calculator
-There are some rules for using this calculator:
-\t1. Each term must have spaces separating terms (eg 5 + 5 not 5+5)
-\t2. This calculator only recognizes numbers and this set of symbols (+, -, *, /, //, %, ^)
-\t3. Type \'q\' or \'quit\' to exit the program''')
+    runCalculator()
 
-calculator()
+    exit(0)
 
-exit(0)
+if __name__ == "__main__":
+    main()
