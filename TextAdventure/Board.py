@@ -15,8 +15,8 @@ class Board:
         screen.setup(self.board_width + 200, self.board_height + 200)
         turtle.speed(0)
         self.draw_board()
-        self.draw_bad_guy(1, 1, 30)
-        self.draw_good_guy(2, 2, 30)
+        self.draw_bad_guy(1, 1)
+        self.draw_good_guy(2, 2)
         turtle.done()
     
     def draw_board(self):
@@ -35,25 +35,25 @@ class Board:
             turtle.fd(self.square_size)
             turtle.left(90)
     
-    def draw_bad_guy(self, row, col, radius):
+    def draw_bad_guy(self, row, col):
         # compute center of grid cell
         x = -self.board_width // 2 + col * self.square_size + self.square_size // 2
         y = -self.board_height // 2 + row * self.square_size + self.square_size // 2
         turtle.up()
-        turtle.goto(x, y - radius)  # offset so circle is centered
+        turtle.goto(x, y - 30)  # offset so circle is centered
         turtle.down()
         turtle.color("red")
-        turtle.circle(radius)
+        turtle.circle(30)
         turtle.color("black")
 
-    def draw_good_guy(self, row, col, radius):
+    def draw_good_guy(self, row, col):
         x = -self.board_width // 2 + col * self.square_size + self.square_size // 2
         y = -self.board_height // 2 + row * self.square_size + self.square_size // 2
         turtle.up()
-        turtle.goto(x, y - radius)
+        turtle.goto(x, y - 30)
         turtle.down()
         turtle.color("yellow")
-        turtle.circle(radius)
+        turtle.circle(30)
         turtle.color("black")
 
 test = [[1, 2, 3],
