@@ -6,47 +6,14 @@ import time
 
 #Functions
 
-def userChoice(userSelection): #Converts the user's choice to an item
+# Converts the user's choice to an item
+def userChoice(userSelection):
+    mapping = {1: "Rock", 2: "Paper", 3: "Scissors"}
+    return mapping.get(userSelection, None)
 
-    '''
-    This function converts the user's decision between 1, 2, or 3 into a proper rock, paper, or scissors item
-    '''
-    
-    if userSelection == 1: #Looks at what the user entered
-        
-        userSelection = 'Rock' #Changes variable to the item
-    
-    elif userSelection == 2:
-        
-        userSelection = 'Paper'
-    
-    elif userSelection == 3:
-        
-        userSelection = 'Scissors'
-    
-    return userSelection
-
-def computerResponse(): #Computer will generate it's own choice and will be converted into an item
-
-    '''
-    This function randomly generates a number between 1, 2, or 3 and then converts it into rock, paper, or scissors
-    '''
-
-    computerChoice = random.randint(1, 3) #Randomly chooses between 1, 2, or 3
-    
-    if computerChoice == 1:
-        
-        computerChoice = 'Rock'
-    
-    elif computerChoice == 2:
-        
-        computerChoice = 'Paper'
-    
-    elif computerChoice == 3:
-        
-        computerChoice = 'Scissors'
-    
-    return computerChoice #Choice is saved in function call
+# This function randomly generates a number between 1, 2, or 3 and then converts it into rock, paper, or scissors
+def computerResponse():
+    return random.choice(["Rock", "Paper", "Scissors"])
 
 def battle(userChoice, computerResponse): #This is where operations are done to see who won
 
