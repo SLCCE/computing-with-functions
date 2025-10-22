@@ -119,4 +119,5 @@ class Board:
 #         [1, 0, 1, 0, 0, 0, 0, 1],
 #         [1, 1, 1, 1, 1, 1, 1, 1]]
 
-b = Board("maps/map1.txt")
+if __name__ == "__main__":
+    b = Board("maps/map1.txt")
