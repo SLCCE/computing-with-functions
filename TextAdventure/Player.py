@@ -1,9 +1,9 @@
 import turtle
 from Character import Character
-from item.HealthPotion import HealthPotion
+# from item.HealthPotion import HealthPotion
 
 class Player(turtle.Turtle, Character):
-    def __init__(self, start_x, start_y, current_hp, max_hp, tile_size=24):
+    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, tile_size=24):
         # initializing turtle
         turtle.Turtle.__init__(self)
         self.color("blue")
@@ -11,35 +11,15 @@ class Player(turtle.Turtle, Character):
         self.speed(0)
         
         # initializing character for hp and inventory
-        Character.__init__(self, current_hp, max_hp)
+        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment)
         
         # player position and settings
-        self.position = [start_x, start_y]
         self.tile_size = tile_size
-        self.goto(start_x * tile_size, start_y * tile_size)
-        
-        # equipment
-        self.equipment = {
-            "helmet": None,
-            "chestplate": None,
-            "pants": None,
-            "boots": None,
-            "weapon": None
-        }
         
         self._draw_player()
     
-    def _draw_player(self):
-        self.clear()
-        current_pos = self.pos()
-        self.goto(current_pos[0], current_pos[1])
-        self.pendown()
-        self.fillcolor("blue")
-        self.begin_fill()
-        self.circle(10)
-        self.end_fill()
-        self.penup()
-        self.goto(current_pos)
+    def __str__(self):
+        return str(self.hp)
     
     # hp getters and setters
     def get_hp(self):
@@ -111,3 +91,7 @@ class Player(turtle.Turtle, Character):
         new_x = self.position[0] + 1
         new_y = self.position[1]
         self.set_position(new_x, new_y)
+
+if __name__ == "__main__":
+    p = Player(7, 10, 1, 1, [], [])
+    print(p)
