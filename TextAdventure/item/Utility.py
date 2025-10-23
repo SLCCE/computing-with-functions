@@ -1,9 +1,11 @@
+import turtle
 from abc import ABC, abstractmethod
 
-class Item(ABC):
+class Utility(ABC):
     def __init__(self, name: str, quanity: int):
         self.name = name
         self.quantity = quanity
+        turtle.Turtle.__init__(self)
     
     def getName(self): 
         return self.name
