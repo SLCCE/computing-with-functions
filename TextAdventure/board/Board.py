@@ -1,6 +1,6 @@
 import turtle
 # import Character
-import Tile
+from . import Tile
 
 class Board:
     def __init__(self, path):
@@ -26,12 +26,15 @@ class Board:
         self.draw_good_guy(self.good[0], self.good[1])
         turtle.done()
     
+    def __str__(self):
+        return str((self.rows, self.cols, "state:", self.boardState, ))
+    
     def get_tile(self, row, col):
         return self.boardState[row][col]
     
     def load_board(self, path):
         with open(path, "r") as fin:
-            print(self.good, self.bad)
+            # print(self.good, self.bad)
             lines = fin.readlines()
             boardState = []
             for (lineNumber, line) in enumerate(lines):
