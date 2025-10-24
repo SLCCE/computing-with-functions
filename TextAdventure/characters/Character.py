@@ -1,26 +1,46 @@
 # from item.HealthPotion import *
+import turtle
 
 class Character:
-    def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment):
+    def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment, t: turtle.Turtle):
         self.hp = [current_hp, max_hp]
+        self.xPos = initX
+        self.yPos = initY
         # self.inventory = {"items": [HealthPotion(max_hp / 2, 1)]}
         self.inventory = startingInventory
         self.equipment = startingEquipment
-        self.xPos = initX
-        self.yPos = initY
+        self.t = t
     
     def _draw_self(self, color):
-        self.clear()
-        self.goto(self.xPos, self.yPos)
-        self.pendown()
-        self.fillcolor(color)
-        self.begin_fill()
-        self.circle(10)
-        self.end_fill()
-        self.penup()
+        pass
     
     def die(self):
-        self.clear()
+        self.t.clear()
+    
+    def __str__(self):
+        return str(type(self)) + " " + str(self.hp)
+    
+    # hp getters and setters
+    def get_hp(self):
+        return self.hp[0]
+    
+    def set_hp(self, value):
+        self.hp[0] = min(value, self.hp[1])
+        if self.hp[0] < 0:
+            self.hp[0] = 0
+    
+    def get_max_hp(self):
+        return self.hp[1]
+    
+    def set_max_hp(self, value):
+        self.hp[1] = value
+    
+    # position getters and setters
+    def get_position(self):
+        return self.position
+    
+    def set_position(self, x, y):
+        self.position = [x, y]
     
     # Heals the Character if they have a HealthPotion in their inventory, upto their max health. Returns the amount of health healed
     # def heal(self):

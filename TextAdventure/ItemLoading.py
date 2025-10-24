@@ -16,3 +16,8 @@ with open("maps/item1.txt", "r") as fin:
         # else:
         #     raise Exception("not equipment or item")
 print(equipment, items)
+
+# alternatively, loading into the player's state:
+from characters import Character, Player
+p = Player(7, 10, 1, 1, [], [])
+print(p)

@@ -2,61 +2,39 @@ import turtle
 from Character import Character
 # from item.HealthPotion import HealthPotion
 
-class BadGuy(turtle.Turtle, Character):
-    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, tile_size=24):
-        # initializing turtle
-        turtle.Turtle.__init__(self)
-        self.color("red")
-        self.penup()
-        self.speed(0)
-        
+class BadGuy(Character):
+    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, tile_size=24):        
         # initializing character for hp and inventory
-        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment)
+        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t)
 
         self.tile_size = tile_size
         # self.goto(start_x * tile_size, start_y * tile_size)
         
-        self._draw_bad_guy()
+        self._draw_self("red")
     
-    def __str__(self):
-        return str(self.hp)
-    
-    # hp getters and setters
-    def get_hp(self):
-        return self.hp[0]
-    
-    def set_hp(self, value):
-        self.hp[0] = min(value, self.hp[1])
-        if self.hp[0] < 0:
-            self.hp[0] = 0
-    
-    def get_max_hp(self):
-        return self.hp[1]
-    
-    def set_max_hp(self, value):
-        self.hp[1] = value
-    
-    # position getters and setters
-    def get_position(self):
-        return self.position
-    
-    def set_position(self, x, y):
-        self.position = [x, y]
-        self.goto(x * self.tile_size, y * self.tile_size)
-        self._draw_bad_guy()
+    # Override from parent class
+    def _draw_self(self, color):
+        self.t.clear()
+        self.t.goto(self.xPos, self.yPos)
+        self.t.pendown()
+        self.t.fillcolor(color)
+        self.t.begin_fill()
+        self.t.circle(10)
+        self.t.end_fill()
+        self.t.penup()
     
     # equipment methods
-    # def equip_item(self, slot, item):
-    #     if slot in self.equipment:
-    #         self.equipment[slot] = item
+    def equip_item(self, slot, item):
+        if slot in self.equipment:
+            self.equipment[slot] = item
     
     # def unequip_item(self, slot):
     #     if slot in self.equipment:
     #         self.equipment[slot] = None
     
     # inventory methods
-    # def add_item(self, item):
-    #     self.inventory["items"].append(item)
+    def add_item(self, item):
+        self.inventory["items"].append(item)
     
     # def remove_item(self, item):
     #     if item in self.inventory["items"]:

@@ -1,49 +1,27 @@
 import turtle
-from Character import Character
+from .Character import Character
 # from item.HealthPotion import HealthPotion
 
-class Player(turtle.Turtle, Character):
-    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, tile_size=24):
-        # initializing turtle
-        turtle.Turtle.__init__(self)
-        self.color("blue")
-        self.penup()
-        self.speed(0)
-        
+class Player(Character):
+    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, tile_size=24):
         # initializing character for hp and inventory
-        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment)
+        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t)
         
         # player position and settings
         self.tile_size = tile_size
         
-        self._draw_player()
+        self._draw_self("green")
     
-    def __str__(self):
-        return str(self.hp)
-    
-    # hp getters and setters
-    def get_hp(self):
-        return self.hp[0]
-    
-    def set_hp(self, value):
-        self.hp[0] = min(value, self.hp[1])
-        if self.hp[0] < 0:
-            self.hp[0] = 0
-    
-    def get_max_hp(self):
-        return self.hp[1]
-    
-    def set_max_hp(self, value):
-        self.hp[1] = value
-    
-    # position getters and setters
-    def get_position(self):
-        return self.position
-    
-    def set_position(self, x, y):
-        self.position = [x, y]
-        self.goto(x * self.tile_size, y * self.tile_size)
-        self._draw_player()
+    # Override from parent class
+    def _draw_self(self, color):
+        self.t.clear()
+        self.t.goto(self.position[0] * self.tile_size, self.position[1] * self.tile_size)
+        self.t.pendown()
+        self.t.fillcolor(color)
+        self.t.begin_fill()
+        self.t.circle(10)
+        self.t.end_fill()
+        self.t.penup()
     
     # equipment methods
     def equip_item(self, slot, item):
@@ -56,20 +34,20 @@ class Player(turtle.Turtle, Character):
     
     # inventory methods
     def add_item(self, item):
-        self.inventory["items"].append(item)
+        self.inventory.append(item)
     
     def remove_item(self, item):
-        if item in self.inventory["items"]:
-            self.inventory["items"].remove(item)
+        if item in self.inventory:
+            self.inventory.remove(item)
     
-    def use_item(self, item_index):
-        if 0 <= item_index < len(self.inventory["items"]):
-            item = self.inventory["items"][item_index]
-            if isinstance(item, HealthPotion):
-                healed = self.heal()
-                if healed > 0:
-                    return "Healed " + str(healed) + " HP!"
-        return "Invalid item!"
+    # def use_item(self, item_index):
+    #     if 0 <= item_index < len(self.inventory["items"]):
+    #         item = self.inventory["items"][item_index]
+    #         if isinstance(item, HealthPotion):
+    #             healed = self.heal()
+    #             if healed > 0:
+    #                 return "Healed " + str(healed) + " HP!"
+    #     return "Invalid item!"
     
     # move methods
     def move_up(self, board):
