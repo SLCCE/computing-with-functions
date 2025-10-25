@@ -4,11 +4,14 @@ import turtle
 class Character:
     def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment, t: turtle.Turtle):
         self.hp = [current_hp, max_hp]
-        self.xPos = initX
-        self.yPos = initY
+        self.position = [initX, initY]
         # self.inventory = {"items": [HealthPotion(max_hp / 2, 1)]}
-        self.inventory = startingInventory
-        self.equipment = startingEquipment
+        self.inventory = []
+        for invEntry in startingInventory:
+            self.add_item(self, invEntry)
+        self.equipment = []
+        for eqEntry in startingEquipment:
+            self.equip_item(self, eqEntry["slot"], eqEntry["item"])
         self.t = t
     
     def _draw_self(self, color):
@@ -41,6 +44,23 @@ class Character:
     
     def set_position(self, x, y):
         self.position = [x, y]
+    
+    # equipment methods
+    def equip_item(self, slot, item):
+        if slot in self.equipment.keys():
+            self.equipment[slot] = item
+    
+    def unequip_item(self, slot):
+        if slot in self.equipment.keys():
+            self.equipment[slot] = None
+    
+    # inventory methods
+    def add_item(self, item):
+        self.inventory.append(item)
+    
+    def remove_item(self, item):
+        if item in self.inventory:
+            self.inventory.remove(item)
     
     # Heals the Character if they have a HealthPotion in their inventory, upto their max health. Returns the amount of health healed
     # def heal(self):

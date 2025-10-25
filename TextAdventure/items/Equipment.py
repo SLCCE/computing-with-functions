@@ -4,6 +4,7 @@ class ArmorType(Enum):
     HELMET = 1
     CHEST = 2
     LEGS = 3
+    BOOTS = 4
 
 class WeaponType (Enum):
     SWORD = 1
@@ -54,7 +55,7 @@ class Weapon():
         self.atkDmg = atkDmg
     
     def getWeaponType(self):
-        return self.armorType
+        return self.weaponType
     
     def setWeaponType(self, weaponType: WeaponType):
         self.weaponType = weaponType

@@ -19,5 +19,7 @@ print(equipment, items)
 
 # alternatively, loading into the player's state:
 from characters import Character, Player
-p = Player(7, 10, 1, 1, [], [])
+import turtle
+t = turtle.Turtle()
+p = Player(7, 10, 1, 1, [], [], t)
 print(p)

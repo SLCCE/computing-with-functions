@@ -23,23 +23,6 @@ class Player(Character):
         self.t.end_fill()
         self.t.penup()
     
-    # equipment methods
-    def equip_item(self, slot, item):
-        if slot in self.equipment:
-            self.equipment[slot] = item
-    
-    def unequip_item(self, slot):
-        if slot in self.equipment:
-            self.equipment[slot] = None
-    
-    # inventory methods
-    def add_item(self, item):
-        self.inventory.append(item)
-    
-    def remove_item(self, item):
-        if item in self.inventory:
-            self.inventory.remove(item)
-    
     # def use_item(self, item_index):
     #     if 0 <= item_index < len(self.inventory["items"]):
     #         item = self.inventory["items"][item_index]
@@ -49,23 +32,23 @@ class Player(Character):
     #                 return "Healed " + str(healed) + " HP!"
     #     return "Invalid item!"
     
-    # move methods
-    def move_up(self, board):
+    # move methods (board 'isOut' method will do error handling)
+    def move_up(self):
         new_x = self.position[0]
         new_y = self.position[1] + 1
         self.set_position(new_x, new_y)
     
-    def move_down(self, board):
+    def move_down(self):
         new_x = self.position[0]
         new_y = self.position[1] - 1
         self.set_position(new_x, new_y)
     
-    def move_left(self, board):
+    def move_left(self):
         new_x = self.position[0] - 1
         new_y = self.position[1]
         self.set_position(new_x, new_y)
     
-    def move_right(self, board):
+    def move_right(self):
         new_x = self.position[0] + 1
         new_y = self.position[1]
         self.set_position(new_x, new_y)

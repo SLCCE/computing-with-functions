@@ -23,23 +23,6 @@ class BadGuy(Character):
         self.t.end_fill()
         self.t.penup()
     
-    # equipment methods
-    def equip_item(self, slot, item):
-        if slot in self.equipment:
-            self.equipment[slot] = item
-    
-    # def unequip_item(self, slot):
-    #     if slot in self.equipment:
-    #         self.equipment[slot] = None
-    
-    # inventory methods
-    def add_item(self, item):
-        self.inventory["items"].append(item)
-    
-    # def remove_item(self, item):
-    #     if item in self.inventory["items"]:
-    #         self.inventory["items"].remove(item)
-    
     # def use_item(self, item_index):
     #     if 0 <= item_index < len(self.inventory["items"]):
     #         item = self.inventory["items"][item_index]

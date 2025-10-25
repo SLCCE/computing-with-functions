@@ -1,2 +1,0 @@
-equipment helmet 1
-weapon sword 2
