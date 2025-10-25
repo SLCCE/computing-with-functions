@@ -15,7 +15,7 @@ class Armor():
     def __init__(self, name: str, defence: int, armorType: ArmorType):
         self.name = name
         self.defence = defence
-        self.armorType: armorType
+        self.armorType = armorType
 
     def getName(self):
         return self.name
