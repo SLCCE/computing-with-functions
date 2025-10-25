@@ -13,9 +13,9 @@ class WeaponType (Enum):
     SPEAR = 4
 
 class Armor():
-    def __init__(self, name: str, defence: int, armorType: ArmorType):
+    def __init__(self, name: str, defense: int, armorType: ArmorType):
         self.name = name
-        self.defence = defence
+        self.defense = defense
         self.armorType = armorType
 
     def getName(self):
@@ -24,11 +24,11 @@ class Armor():
     def setName(self, name: str):
         self.name = name
 
-    def getDefence(self):
-        return self.defence
+    def getDefense(self):
+        return self.defense
 
-    def setDefence(self, defence: int):
-        self.defence = defence
+    def setDefense(self, defense: int):
+        self.defense = defense
     
     def getArmorType(self):
         return self.armorType

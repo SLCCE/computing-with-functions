@@ -1,1 +1,1 @@
-helmet 1
+sword 2

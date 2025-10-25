@@ -1,5 +1,6 @@
 # from item.HealthPotion import *
 import turtle
+from items.Equipment import Armor, Weapon, ArmorType, WeaponType
 
 class Character:
     def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment, t: turtle.Turtle):
@@ -7,11 +8,19 @@ class Character:
         self.position = [initX, initY]
         # self.inventory = {"items": [HealthPotion(max_hp / 2, 1)]}
         self.inventory = []
+        self.equipment = {ArmorType.HELMET: "", 
+                          ArmorType.CHEST: "", 
+                          ArmorType.LEGS: "", 
+                          ArmorType.BOOTS: ""}
+        # (name, offense)
         for invEntry in startingInventory:
-            self.add_item(self, invEntry)
-        self.equipment = []
+            print(invEntry)
+            # TODO: determine weapon, potion, utility, etc. 
+            self.add_item(invEntry)
+        # (name, defense, armorType)
         for eqEntry in startingEquipment:
-            self.equip_item(self, eqEntry["slot"], eqEntry["item"])
+            armorObject = Armor(eqEntry[0], eqEntry[1], eqEntry[2])
+            self.equip_item(ArmorType(int(eqEntry[2])), armorObject)
         self.t = t
     
     def _draw_self(self, color):
@@ -47,12 +56,10 @@ class Character:
     
     # equipment methods
     def equip_item(self, slot, item):
-        if slot in self.equipment.keys():
-            self.equipment[slot] = item
+        self.equipment[slot] = item
     
-    def unequip_item(self, slot):
-        if slot in self.equipment.keys():
-            self.equipment[slot] = None
+    def unequip_item(self, slot):        
+        self.equipment[slot] = None
     
     # inventory methods
     def add_item(self, item):
