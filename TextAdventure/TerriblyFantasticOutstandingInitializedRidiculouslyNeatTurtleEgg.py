@@ -62,28 +62,31 @@ def move (direction):
         goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_up()
+            print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'down'):
         goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_down()
+            print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'right'):
         goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_right()
+            print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'left'):
         goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_left()
+            print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
-    
-    print(f'Moving {direction} to {player.get_position()}')
+            
     player._draw_self(PLAYER_COLOR)
     state_checks()
     screen.update()
