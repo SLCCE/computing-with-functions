@@ -1,90 +1,102 @@
 #Rock, Paper Scissors Game
 
-'''
-====================================================================================================================
-DO NOT CHANGE ANY OF THE CODE UNLESS TOLD TO
-YOU WILL BE TOLD WHICH SECTIONS TO EDIT
-====================================================================================================================
-'''
-
 #Modules
 import random
-
-#Functions
-
-def userChoice(userSelection): #Converts the user's choice to an item
-
-    '''
-    This function converts the user's decision between 1, 2, or 3 into a proper rock, paper, or scissors item
-    '''
-    
-    if userSelection == 1: #Looks at what the user entered
-        
-        userSelection = 'Rock' #Changes variable to the item
-    
-    elif userSelection == 2:
-        
-        userSelection = 'Paper'
-    
-    elif userSelection == 3:
-        
-        userSelection = 'Scissors'
-    
-    return userSelection
-
-def computerResponse(): #Computer will generate it's own choice and will be converted into an item
-
-    '''
-    This function randomly generates a number between 1, 2, or 3 and then converts it into rock, paper, or scissors
-    '''
-
-    computerChoice = random.randint(1, 3) #Randomly chooses between 1, 2, or 3
-    
-    if computerChoice == 1:
-        
-        computerChoice = 'Rock'
-    
-    elif computerChoice == 2:
-        
-        computerChoice = 'Paper'
-    
-    elif computerChoice == 3:
-        
-        computerChoice = 'Scissors'
-    
-    return computerChoice #Choice is saved in function call
 
 '''
 ====================================================================================================================
 YOUR FIRST CODING EXERCISE
 Below you will create a function which will determine whether the computer or the user wins
 You will be comparing the strings "Rock", "Paper", and "Scissors"
- - Create a function named `battle` which takes in two paramters:
-    - `userChoice` which is the string representing "Rock"/"Paper"/"Scissors" that the user picked
-    - `computerResponse` which is the string representing "Rock"/"Paper"/"Scissors" that the computer randomly picked
  - Create a set of conditionals to determine who wins using the rules of rock, paper, scissors
     - If both choices are the same, then the functions returns "Draw!"
     - If the computer wins, then the function returns "Computer Wins!"
     - If the user wins, then the function returns "Player 1 Wins!"
+    - Replace each instance of 'pass' with the string describing who wins. 
+    - The first few examples have been done for you. 
 ====================================================================================================================
 '''
+# This function compares the choices of the user and computer 
+# in order to determine who wins the round based on the rules of rock, paper, scissors
+def battle(userChoice, computerResponse): #This is where operations are done to see who won
+    if userChoice == computerResponse:
+        return("\nDraw!\nRound will be played again!")    
+    elif userChoice == 'Rock': #Calculates winner based on who chose what
+        if computerResponse == 'Paper':
+            # player rock, computer paper
+            return('\nComputer Wins!')
+        else:
+            # player rock, computer scissors
+            return("\nPlayer 1 Wins!")
+    elif userChoice == 'Paper':
+        if computerResponse == 'Scissors':
+            # player paper, computer scissors
+            pass
+        else:
+            # player paper, computer rock
+            pass
+    else:
+        if computerResponse == 'Rock':
+            # player scissors, computer rock
+            pass
+        else:
+            # player scissors, computer paper
+            pass
+
+# ============================================================================================================================
+# ============================================================================================================================
+# ============================================================================================================================
+
+# Converts the user's choice to an item
+def userChoice(userSelection):
+    mapping = {1: "Rock", 2: "Paper", 3: "Scissors"}
+    return mapping.get(userSelection, None)
+
+# This function randomly generates a number between 1, 2, or 3 and then converts it into rock, paper, or scissors
+def computerResponse():
+    return random.choice(["Rock", "Paper", "Scissors"])
+
+def testBattle():
+    try:
+        # Expected outcomes mapping
+        outcomes = {
+            ("Rock", "Rock"): "Draw",
+            ("Rock", "Paper"): "Computer",
+            ("Rock", "Scissors"): "Player",
+            ("Paper", "Rock"): "Player",
+            ("Paper", "Paper"): "Draw",
+            ("Paper", "Scissors"): "Computer",
+            ("Scissors", "Rock"): "Computer",
+            ("Scissors", "Paper"): "Player",
+            ("Scissors", "Scissors"): "Draw",
+        }
+
+        for userChoice, compChoice in outcomes.keys():
+            result = battle(userChoice, compChoice)
+            expected = outcomes[(userChoice, compChoice)]
+            # simple keyword check so it works even if students add newlines/text
+            if expected not in result:
+                print(f"FAIL: {userChoice} vs {compChoice} gave '{result}' but expected '{expected}'")
+                return
+        print("Battle tests Pass!")
+    except Exception as e:
+        print("Battle tests ERROR:", e)
 
 #Title Slide
 print("Welcome to Rock, Paper, Scissors!") #Game begins
 
 #Hidden input to start, once they press enter the code will continue
 
-while True: #Will make the user press enter to play, if they try to break the system it will repeat
-
+while True:  # Will make the user press enter to play, or 't' to run tests
     try:
-        
-        userBegins = input('Press Enter to play!') #The user can enter anything they want, but they must press enter to continue
-        
-        break #Once the right thing is done the while loop ends
-    
+        userBegins = input("Press Enter to play, or type 't' to run tests: ").strip().lower()
+        if userBegins == "t":
+            testBattle()
+            exit(0)  # quit after running tests
+        break
     except KeyboardInterrupt:
-    
         continue
+
 
 #Rules
 print('''
@@ -166,26 +178,7 @@ while True: #Continious loops to play multiple games
         while True: #Will filter out any errors that occur and give a feedback mechanism
         
             try:
-                '''
-                ====================================================================================================================
-                YOUR SECOND CODING EXERCISE
-                Below you will ask the user for input in the form of an integer and store it in a variable
-                 - Create a variable named `userOption`
-                 - Using the `input` function, ask the user to pick a number 1, 2, 3, or 4 where
-                    - 1 is Rock
-                    - 2 is Paper
-                    - 3 is Scissors
-                    - 4 is Exit Game
-                 - Convert the input into an integer
-                 - Store the number into `userOption`
-                ====================================================================================================================
-                '''
-
-
-
-
-
-
+                userOption = int(input('\nMake your decision. 1, 2, 3, or 4: ')) #User makes their decision
 
                 if userOption < 1 or userOption > 4: #If the user enters something wrong, the will be prompted to start again
                     
@@ -213,7 +206,7 @@ while True: #Continious loops to play multiple games
         
         if userOption == 4: #Game will end if the user wants it to
                     
-                    break
+            break
         
         userConversion = userChoice(userOption) #Converted to item
         

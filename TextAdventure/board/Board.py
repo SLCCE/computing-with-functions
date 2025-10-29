@@ -1,6 +1,7 @@
 import turtle
 # import Character
 from . import Tile
+from pathlib import Path
 
 class Board:
     def __init__(self, path):
@@ -11,20 +12,20 @@ class Board:
         self.rows = len(self.boardState)
         self.cols = len(self.boardState[0])
 
-        # print(self.rows, self.cols)
-        self.bad_guy_turtle = turtle.Turtle()
-        self.good_guy_turtle = turtle.Turtle()
+        print(self.rows, self.cols)
+        # self.bad_guy_turtle = turtle.Turtle()
+        # self.good_guy_turtle = turtle.Turtle()
         self.square_size = 75
         self.board_width = self.cols * self.square_size
         self.board_height = self.rows * self.square_size
 
-        screen = turtle.Screen()
-        screen.setup(self.board_width + 200, self.board_height + 200)
-        turtle.speed(0)
-        self.draw_board()
-        self.draw_bad_guy(self.bad[0], self.bad[1])
-        self.draw_good_guy(self.good[0], self.good[1])
-        turtle.done()
+        # screen = turtle.Screen()
+        # screen.setup(self.board_width + 200, self.board_height + 200)
+        # turtle.speed(0)
+        # self.draw_board()
+        # self.draw_bad_guy(self.bad[0], self.bad[1])
+        # self.draw_good_guy(self.good[0], self.good[1])
+        # turtle.done()
     
     def __str__(self):
         return str((self.rows, self.cols, "state:", self.boardState, ))
@@ -33,7 +34,9 @@ class Board:
         return self.boardState[row][col]
     
     def load_board(self, path):
-        with open(path, "r") as fin:
+        project_root = Path(__file__).resolve().parent.parent
+        full_path = (project_root / path).resolve()
+        with open(full_path, "r") as fin:
             # print(self.good, self.bad)
             lines = fin.readlines()
             boardState = []

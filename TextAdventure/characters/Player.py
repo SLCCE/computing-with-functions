@@ -19,7 +19,7 @@ class Player(Character):
         self.t.pendown()
         self.t.fillcolor(color)
         self.t.begin_fill()
-        self.t.circle(10)
+        self.t.circle(20)
         self.t.end_fill()
         self.t.penup()
     
