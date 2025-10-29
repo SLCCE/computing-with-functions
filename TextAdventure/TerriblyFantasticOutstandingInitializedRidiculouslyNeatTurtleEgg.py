@@ -56,7 +56,7 @@ def attack():
 ####################################
 # MOVEMENT
 ####################################
-def up():
+def up(test):
     player.move_up()
     print(f'Moving up to {player.get_position()}')
     player._draw_self(PLAYER_COLOR)
@@ -84,6 +84,38 @@ def left():
     state_checks()
     screen.update()
 
+def move (direction):
+    playerPos = player.get_position()
+    if (direction == 'up'):
+        goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
+        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+            player.move_up()
+        else:
+            print(f'Goal Position is of type: {goalPos.getStatus()}')
+    elif (direction == 'down'):
+        goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
+        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+            player.move_down()
+        else:
+            print(f'Goal Position is of type: {goalPos.getStatus()}')
+    elif (direction == 'right'):
+        goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
+        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+            player.move_right()
+        else:
+            print(f'Goal Position is of type: {goalPos.getStatus()}')
+    elif (direction == 'left'):
+        goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
+        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+            player.move_left()
+        else:
+            print(f'Goal Position is of type: {goalPos.getStatus()}')
+    
+    print(f'Moving {direction} to {player.get_position()}')
+    player._draw_self(PLAYER_COLOR)
+    state_checks()
+    screen.update()
+
 def disableMovement():
     screen.onkey(doNothing, 'Up')
     screen.onkey(doNothing, 'Down')
@@ -91,10 +123,14 @@ def disableMovement():
     screen.onkey(doNothing, 'Left')
 
 def enableMovement():
-    screen.onkey(up, 'Up')
-    screen.onkey(down, 'Down')
-    screen.onkey(right, 'Right')
-    screen.onkey(left, 'Left')
+    # screen.onkey(up, 'Up')
+    # screen.onkey(down, 'Down')
+    # screen.onkey(right, 'Right')
+    # screen.onkey(left, 'Left')
+    screen.onkey(lambda: move('up'), 'Up')
+    screen.onkey(lambda: move('down'), 'Down')
+    screen.onkey(lambda: move('right'), 'Right')
+    screen.onkey(lambda: move('left'), 'Left')
 
 def doNothing ():
     pass

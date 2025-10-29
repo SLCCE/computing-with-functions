@@ -23,6 +23,6 @@ def initalizePlayer():
             name, defense, armorType = line.split()
             inputEquipment.append((name, defense, armorType))
 
-    p = Player(7, 10, 1, 1, inputInventory, inputEquipment, t)
+    p = Player(7, 10, 1, 1, inputInventory, inputEquipment, t, 75)
     print(p.inventory, p.equipment)
     return p
