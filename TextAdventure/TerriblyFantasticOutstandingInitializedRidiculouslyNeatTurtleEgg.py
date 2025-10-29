@@ -56,34 +56,6 @@ def attack():
 ####################################
 # MOVEMENT
 ####################################
-def up(test):
-    player.move_up()
-    print(f'Moving up to {player.get_position()}')
-    player._draw_self(PLAYER_COLOR)
-    state_checks()
-    screen.update()
-
-def down():
-    player.move_down()
-    print(f'Moving down to {player.get_position()}')
-    player._draw_self(PLAYER_COLOR)
-    state_checks()
-    screen.update()
-
-def right():
-    player.move_right()
-    print(f'Moving right to {player.get_position()}')
-    player._draw_self(PLAYER_COLOR)
-    state_checks()
-    screen.update()
-
-def left():
-    player.move_left()
-    print(f'Moving left to {player.get_position()}')
-    player._draw_self(PLAYER_COLOR)
-    state_checks()
-    screen.update()
-
 def move (direction):
     playerPos = player.get_position()
     if (direction == 'up'):
