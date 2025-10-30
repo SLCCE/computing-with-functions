@@ -3,7 +3,7 @@ import turtle
 from items.Equipment import Armor, Weapon, ArmorType, WeaponType
 
 class Character:
-    def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment, t: turtle.Turtle):
+    def __init__(self, current_hp, max_hp, initX, initY, startingInventory, startingEquipment, t: turtle.Turtle, offset):
         self.hp = [current_hp, max_hp]
         self.position = [initX, initY]
         # self.inventory = {"items": [HealthPotion(max_hp / 2, 1)]}
@@ -22,6 +22,9 @@ class Character:
             armorObject = Armor(eqEntry[0], eqEntry[1], eqEntry[2])
             self.equip_item(ArmorType(int(eqEntry[2])), armorObject)
         self.t = t
+        self.t.up()
+        self.t.hideturtle()
+        self.offset = offset
     
     def _draw_self(self, color):
         pass

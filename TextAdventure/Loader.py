@@ -4,12 +4,12 @@ from pathlib import Path
 
 import turtle
 
-def initalizePlayer():
+def initalizePlayer(boardWidth, boardHeight):
     t = turtle.Turtle()
 
     project_root = Path(__file__).resolve().parent
-    invPath = (project_root / "maps/inventory1.txt").resolve()
-    eqPath = (project_root / "maps/equipment1.txt").resolve()
+    invPath = (project_root / "maps/map1/inventory1.txt").resolve()
+    eqPath = (project_root / "maps/map1/equipment1.txt").resolve()
 
     inputInventory = []
     with open(invPath, "r") as fin:
@@ -23,6 +23,6 @@ def initalizePlayer():
             name, defense, armorType = line.split()
             inputEquipment.append((name, defense, armorType))
 
-    p = Player(7, 10, 1, 1, inputInventory, inputEquipment, t, 75)
+    p = Player(7, 10, 1, 1, inputInventory, inputEquipment, t, (boardWidth, boardHeight), 75)
     print(p.inventory, p.equipment)
     return p

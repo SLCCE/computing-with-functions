@@ -28,7 +28,15 @@ class Board:
         # turtle.done()
     
     def __str__(self):
-        return str((self.rows, self.cols, "state:", self.boardState, ))
+        # return str((self.rows, self.cols, "state:", self.boardState))
+        ret = ""
+        for i in range(self.rows):
+            cur = ""
+            for j in range(self.cols):
+                cur += str(self.boardState[i][j].getStatus())
+                cur += ' '
+            ret += cur + '\n'
+        return ret
     
     def get_tile(self, row, col):
         return self.boardState[row][col]
@@ -58,6 +66,7 @@ class Board:
                     currentRow.append(t)
                 boardState.append(currentRow)
             # print(boardState[0][0].getStatus())
+            boardState = boardState[::-1]
             self.boardState = boardState
     
     def draw_board(self):

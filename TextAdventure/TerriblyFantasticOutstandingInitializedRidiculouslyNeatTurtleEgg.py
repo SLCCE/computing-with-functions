@@ -3,11 +3,12 @@ import turtle
 from board import Board
 import characters
 import items
-from ItemLoading import initalizePlayer
+from Loader import initalizePlayer
 from enum import Enum
 
-MAP_1_PATH = "maps/map1.txt"
-PLAYER_COLOR = 'blue'
+LEVEL = 1
+MAP_1_PATH = "maps/map2/map2.txt"
+PLAYER_COLOR = 'green'
 enemy = None
 
 class Status(Enum):
@@ -59,28 +60,28 @@ def attack():
 def move (direction):
     playerPos = player.get_position()
     if (direction == 'up'):
-        goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
+        goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_up()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'down'):
-        goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
+        goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_down()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'right'):
-        goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
+        goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_right()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'left'):
-        goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
+        goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
         if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
             player.move_left()
             print(f'Moving {direction} to {player.get_position()}')
@@ -117,9 +118,10 @@ screen = turtle.Screen()
 screen.tracer(0)
 
 board = Board.Board(MAP_1_PATH)
+print(board)
 badGuys = []
 loot = []
-player = initalizePlayer()
+player = initalizePlayer(board.board_width // 2, board.board_height // 2)
 
 board.draw_board()
 screen.listen()
