@@ -26,3 +26,14 @@ def initalizePlayer(boardWidth, boardHeight):
     p = Player(7, 10, 1, 1, inputInventory, inputEquipment, t, (boardWidth, boardHeight), 75)
     print(p.inventory, p.equipment)
     return p
+
+def initializeEntities(levelNumber):
+    project_root = Path(__file__).resolve().parent
+    pathString = "maps/map" + str(levelNumber) + "/entity" + str(levelNumber) + ".txt"
+    entityPath = (project_root / pathString).resolve()
+    entityList = []
+    with open(entityPath, "r") as fin:
+        for line in fin.readlines():
+            entity, x, y = line.split()
+            entityList.append((entity, int(x), int(y)))            
+    return entityList

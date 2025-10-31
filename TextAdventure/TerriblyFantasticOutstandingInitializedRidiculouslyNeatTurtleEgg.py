@@ -3,7 +3,7 @@ import turtle
 from board import Board
 import characters
 import items
-from Loader import initalizePlayer
+from Loader import initalizePlayer, initializeEntities
 from enum import Enum
 
 LEVEL = 1
@@ -122,6 +122,8 @@ print(board)
 badGuys = []
 loot = []
 player = initalizePlayer(board.board_width // 2, board.board_height // 2)
+entities = initializeEntities(1)
+print(entities)
 
 board.draw_board()
 screen.listen()
