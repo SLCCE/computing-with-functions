@@ -1,11 +1,11 @@
 import turtle
-from Character import Character
+from .Character import Character
 # from item.HealthPotion import HealthPotion
 
 class BadGuy(Character):
-    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, tile_size=24):        
+    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset, tile_size=24):        
         # initializing character for hp and inventory
-        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t)
+        Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset)
 
         self.tile_size = tile_size
         # self.goto(start_x * tile_size, start_y * tile_size)
@@ -15,7 +15,9 @@ class BadGuy(Character):
     # Override from parent class
     def _draw_self(self, color):
         self.t.clear()
-        self.t.goto(self.xPos, self.yPos)
+        xDestination = self.position[1] * self.tile_size - self.offset[0] + self.tile_size // 2
+        yDestination = self.position[0] * self.tile_size - self.offset[1] + self.tile_size // 4
+        self.t.goto(xDestination, yDestination)
         self.t.pendown()
         self.t.fillcolor(color)
         self.t.begin_fill()

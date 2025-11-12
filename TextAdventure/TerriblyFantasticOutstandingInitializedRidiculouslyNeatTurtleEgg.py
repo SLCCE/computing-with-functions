@@ -51,6 +51,15 @@ def attack():
         print("Player Died")
         status = Status.DEAD
         return 
+    elif (enemy.get_hp() == 0):
+        enemy.die()
+        print("Enemy Defeated")
+        status = Status.MOVE
+        enemyIndex = badGuys.index(enemy)
+        badGuys.pop(enemyIndex)
+        return
+
+
 
 
 
@@ -122,8 +131,14 @@ print(board)
 badGuys = []
 loot = []
 player = initalizePlayer(board.board_width // 2, board.board_height // 2)
-entities = initializeEntities(1)
+entities = initializeEntities(1, board.board_width // 2, board.board_height // 2)
 print(entities)
+for entity in entities:
+    if (isinstance(entity, characters.BadGuy)):
+        badGuys.append(entity)
+    elif (isinstance(entity, items)):
+        loot.append(entity)
+
 
 board.draw_board()
 screen.listen()
