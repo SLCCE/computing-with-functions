@@ -7,10 +7,7 @@ class ArmorType(Enum):
     BOOTS = 4
 
 class WeaponType (Enum):
-    SWORD = 1
-    MACE = 2
-    SHIELD = 3
-    SPEAR = 4
+    SWORD = "A"
 
 class Armor():
     def __init__(self, name: str, defense: int, armorType: ArmorType):

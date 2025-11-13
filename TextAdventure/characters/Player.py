@@ -1,6 +1,7 @@
 import turtle
 from .Character import Character
 # from item.HealthPotion import HealthPotion
+from items.Equipment import WeaponType
 
 class Player(Character):
     def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset, tile_size=24):
@@ -25,6 +26,9 @@ class Player(Character):
         self.t.end_fill()
         self.t.penup()
     
+    def get_strength(self):
+        return self.equipment[WeaponType.SWORD]
+    
     # def use_item(self, item_index):
     #     if 0 <= item_index < len(self.inventory["items"]):
     #         item = self.inventory["items"][item_index]
@@ -33,6 +37,7 @@ class Player(Character):
     #             if healed > 0:
     #                 return "Healed " + str(healed) + " HP!"
     #     return "Invalid item!"
+
     
     # move methods (board 'isOut' method will do error handling)
     def move_up(self):

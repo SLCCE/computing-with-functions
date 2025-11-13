@@ -1,11 +1,12 @@
 from enum import Enum
 
-class Status(Enum):
+class TileStatus(Enum):
     REGULAR = 0
     WALL = 1
+    GOAL = 2
 
 class Tile:
-    def __init__(self, status: Status, entity):
+    def __init__(self, status: TileStatus, entity):
         self.status = status
         self.entity = entity
 

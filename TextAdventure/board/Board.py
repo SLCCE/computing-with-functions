@@ -56,10 +56,11 @@ class Board:
                     status = int(num[0])
                     if len(num) > 1:
                         entity = num[1]
-                        if entity == "g":
-                            self.good = (lineNumber, colNumber)
-                        if entity == "b":
-                            self.bad = (lineNumber, colNumber)
+                        # ex. traps
+                        # if entity == "g":
+                        #     self.good = (lineNumber, colNumber)
+                        # if entity == "b":
+                        #     self.bad = (lineNumber, colNumber)
                         t = Tile.Tile(status, entity)
                     else:
                         t = Tile.Tile(status, None)
@@ -78,8 +79,11 @@ class Board:
                 self.draw_square(x, y, self.boardState[i][j].getStatus())
         
     def draw_square(self, x, y, fill):
-        if (fill):
-            turtle.fillcolor("black")
+        if fill:
+            if fill == 1:
+                turtle.fillcolor("black")
+            elif fill == 2:
+                turtle.fillcolor("gold")
             turtle.begin_fill()
             turtle.up()
             turtle.goto(x, y)

@@ -32,6 +32,7 @@ def initalizePlayer(boardWidth, boardHeight):
 def initializeEntities(levelNumber, boardWidth, boardHeight):
     project_root = Path(__file__).resolve().parent
     pathString = "maps/map" + str(levelNumber) + "/entity" + str(levelNumber) + ".txt"
+
     entityPath = (project_root / pathString).resolve()
     entityList = []
     with open(entityPath, "r") as fin:

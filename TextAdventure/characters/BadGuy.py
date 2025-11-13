@@ -9,7 +9,8 @@ class BadGuy(Character):
 
         self.tile_size = tile_size
         # self.goto(start_x * tile_size, start_y * tile_size)
-        
+        self.strength = 1
+
         self._draw_self("red")
     
     # Override from parent class

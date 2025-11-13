@@ -5,9 +5,10 @@ import characters
 import items
 from Loader import initalizePlayer, initializeEntities
 from enum import Enum
+from board import Tile
 
 LEVEL = 1
-MAP_1_PATH = "maps/map2/map2.txt"
+MAP_1_PATH = "maps/map1/map1.txt"
 PLAYER_COLOR = 'green'
 enemy = None
 
@@ -16,15 +17,33 @@ class Status(Enum):
     MOVE = 1
     COMBAT = 2
     DEAD = 3
+    GOAL = 4
 
 status = Status.ERROR
 
 
 def state_checks():
-    global status
+    global status, enemy
     if (status == Status.DEAD):
         return
     elif (status == Status.COMBAT):
+        return
+    elif (status == Status.MOVE):
+        enableMovement()
+        screen.onkey(doNothing, 'space')
+    elif (status == Status.GOAL):
+        if LEVEL == 1:
+            LEVEL += 1
+            
+        else:
+            print("You win!")
+
+    # check for goal
+    # print(board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus())
+    if board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus() == Tile.TileStatus.GOAL.value:
+        status = Status.GOAL
+        disableMovement()
+        print("going next level")
         return
 
     for badGuy in badGuys:
@@ -37,7 +56,6 @@ def state_checks():
             # Enable attack
             screen.onkey(attack, 'space')
             print("In Combat")
-
     
     
 ####################################
@@ -46,18 +64,24 @@ def state_checks():
 def attack():
     global status
     print('Attacking')
-    if (player.get_hp() == 0):
-        player.die()
-        print("Player Died")
-        status = Status.DEAD
-        return 
-    elif (enemy.get_hp() == 0):
+    enemy_new_hp = max(0, enemy.get_hp() - player.get_strength())
+    enemy.set_hp(enemy_new_hp)
+    if (enemy.get_hp() == 0):
         enemy.die()
         print("Enemy Defeated")
         status = Status.MOVE
         enemyIndex = badGuys.index(enemy)
         badGuys.pop(enemyIndex)
+        state_checks()
         return
+    player_new_hp = max(0, player.get_hp() - enemy.strength)
+    player.set_hp(player_new_hp)
+    if (player.get_hp() == 0):
+        player.die()
+        print("Player Died")
+        status = Status.DEAD
+        return 
+
 
 
 
@@ -70,28 +94,28 @@ def move (direction):
     playerPos = player.get_position()
     if (direction == 'up'):
         goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
-        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+        if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_up()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'down'):
         goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
-        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+        if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_down()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'right'):
         goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
-        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+        if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_right()
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
     elif (direction == 'left'):
         goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
-        if (goalPos.getStatus() == Board.Tile.Status.REGULAR.value):
+        if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_left()
             print(f'Moving {direction} to {player.get_position()}')
         else:

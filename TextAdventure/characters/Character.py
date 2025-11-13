@@ -11,7 +11,8 @@ class Character:
         self.equipment = {ArmorType.HELMET: "", 
                           ArmorType.CHEST: "", 
                           ArmorType.LEGS: "", 
-                          ArmorType.BOOTS: ""}
+                          ArmorType.BOOTS: "", 
+                          WeaponType.SWORD: 1}
         # (name, offense)
         for invEntry in startingInventory:
             print(invEntry)
