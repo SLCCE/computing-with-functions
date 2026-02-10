@@ -1,0 +1,15 @@
+level 1: enable moving up, needed to get to goal state
+level 2: purple gate, given a blue potion --> edit blue to purple
+    or tile that changes player color
+level 3: enemy has 1 strength but attacks 100 times (tests loop knowledge)
+level 4: toggle strength to defeat very high hp boss
+level 5 BOSS: edit map to get a visible item by toggling wall to no-wall
+
+combine the two below
+level 6 (fun): skill check, all enemies on screen attack every 2s, player must move around & defeat all before too late
+    track score
+level 7 (endless) !?: self-explanatory, gets harder over time
+
+
+other ideas
+add fighting indicator for a frame or two
