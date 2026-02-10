@@ -23,7 +23,14 @@ status = Status.ERROR
 
 
 def state_checks():
-    global status, enemy
+    global status, enemy, LEVEL
+    # check for goal
+    # print(board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus())
+    if board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus() == Tile.TileStatus.GOAL.value:
+        status = Status.GOAL
+        disableMovement()
+        # print("going next level")
+    
     if (status == Status.DEAD):
         return
     elif (status == Status.COMBAT):
@@ -32,19 +39,12 @@ def state_checks():
         enableMovement()
         screen.onkey(doNothing, 'space')
     elif (status == Status.GOAL):
-        if LEVEL == 1:
+        print("reached goal")
+        if LEVEL < 5:
             LEVEL += 1
-            
+            loadLevel(LEVEL)
         else:
             print("You win!")
-
-    # check for goal
-    # print(board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus())
-    if board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus() == Tile.TileStatus.GOAL.value:
-        status = Status.GOAL
-        disableMovement()
-        print("going next level")
-        return
 
     for badGuy in badGuys:
         if badGuy.get_position() == player.get_position():
