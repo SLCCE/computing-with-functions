@@ -3,12 +3,12 @@ import turtle
 from board import Board
 import characters
 import items
-from Loader import initalizePlayer, initializeEntities
+from Loader import initalizePlayer, initializeEntities, loadPlayerPosition
 from enum import Enum
 from board import Tile
 
 LEVEL = 1
-MAP_1_PATH = "maps/map1/map1.txt"
+# MAP_1_PATH = "maps/map1/map1.txt"
 PLAYER_COLOR = 'green'
 enemy = None
 
@@ -43,7 +43,11 @@ def state_checks():
         if LEVEL < 5:
             LEVEL += 1
             loadLevel(LEVEL)
+            status = Status.MOVE
+            enableMovement()
         else:
+            disableMovement()
+            # FUTURE TASK: REDIRECT TO "YOU WIN" SCREEN
             print("You win!")
 
     for badGuy in badGuys:
@@ -150,21 +154,37 @@ def doNothing ():
 screen = turtle.Screen()
 screen.tracer(0)
 
-board = Board.Board(MAP_1_PATH)
-print(board)
-badGuys = []
-loot = []
-player = initalizePlayer(board.board_width // 2, board.board_height // 2)
-entities = initializeEntities(1, board.board_width // 2, board.board_height // 2)
-print(entities)
-for entity in entities:
-    if (isinstance(entity, characters.BadGuy)):
-        badGuys.append(entity)
-    elif (isinstance(entity, items)):
-        loot.append(entity)
+# initialize to dummy values
+board, player, badGuys, loot, entities = -1, -1, -1, -1, -1
+def loadLevel(levelNumber):
+    global board, player, badGuys, loot, entities
+    "maps/map1/map1.txt"
+    mapPath = "maps/map" + str(levelNumber) + "/map" + str(levelNumber) + ".txt"
+    print(mapPath)
+    board = Board.Board(mapPath)
 
+    badGuys = []
+    loot = []
+    entities = initializeEntities(1, board.board_width // 2, board.board_height // 2)
+    print(entities)
+    for entity in entities:
+        if (isinstance(entity, characters.BadGuy)):
+            badGuys.append(entity)
+        elif (isinstance(entity, items)):
+            loot.append(entity)
+    # draw the board first, then load the player in
+    board.draw_board()
+    if levelNumber == 1:
+        player = initalizePlayer(board.board_width // 2, board.board_height // 2)
+    else:
+        newX, newY = loadPlayerPosition(LEVEL)
+        # print(newX, newY)
+        player.set_position(newX, newY)
+        player.set_offset((board.board_width // 2, board.board_height // 2))
+        player._draw_self(PLAYER_COLOR)
 
-board.draw_board()
+loadLevel(LEVEL)
+# these may be needed?
 screen.listen()
 
 enableMovement()

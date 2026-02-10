@@ -44,3 +44,13 @@ def initializeEntities(levelNumber, boardWidth, boardHeight):
                 entityList.append(badGuy)
             # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))            
     return entityList
+
+def loadPlayerPosition(levelNumber):
+    project_root = Path(__file__).resolve().parent
+    pathString = "maps/map" + str(levelNumber) + "/good.txt"
+
+    entityPath = (project_root / pathString).resolve()
+    with open(entityPath, "r") as fin:
+        for line in fin.readlines():
+            startX, startY = map(int, line.split())
+            return startX, startY

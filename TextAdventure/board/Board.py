@@ -71,6 +71,7 @@ class Board:
             self.boardState = boardState
     
     def draw_board(self):
+        turtle.clear()
         for i in range(self.rows):
             for j in range(self.cols):
                 # offset so board is centered

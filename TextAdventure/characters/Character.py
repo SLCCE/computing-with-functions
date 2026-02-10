@@ -73,6 +73,9 @@ class Character:
         if item in self.inventory:
             self.inventory.remove(item)
     
+    def set_offset(self, newOffset):
+        self.offset = newOffset
+    
     # Heals the Character if they have a HealthPotion in their inventory, upto their max health. Returns the amount of health healed
     # def heal(self):
     #     # Check for HealthPotions in character's inventory
