@@ -28,11 +28,14 @@ def state_checks():
     # print(board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus())
     if board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus() == Tile.TileStatus.GOAL.value:
         status = Status.GOAL
+        for badGuy in badGuys:
+            badGuy.die()
         disableMovement()
         # print("going next level")
-    
+    for badGuy in badGuys:
+        print(badGuy.position[0], badGuy.position[1])
     if (status == Status.DEAD):
-        return
+        disableMovement()
     elif (status == Status.COMBAT):
         return
     elif (status == Status.MOVE):
@@ -67,6 +70,8 @@ def state_checks():
 ####################################
 def attack():
     global status
+    if status == Status.DEAD:
+        return
     print('Attacking')
     enemy_new_hp = max(0, enemy.get_hp() - player.get_strength())
     enemy.set_hp(enemy_new_hp)
@@ -84,7 +89,6 @@ def attack():
         player.die()
         print("Player Died")
         status = Status.DEAD
-        return 
 
 
 
@@ -158,14 +162,14 @@ screen.tracer(0)
 board, player, badGuys, loot, entities = -1, -1, -1, -1, -1
 def loadLevel(levelNumber):
     global board, player, badGuys, loot, entities
-    "maps/map1/map1.txt"
+    # "maps/map1/map1.txt"
     mapPath = "maps/map" + str(levelNumber) + "/map" + str(levelNumber) + ".txt"
     print(mapPath)
     board = Board.Board(mapPath)
 
     badGuys = []
     loot = []
-    entities = initializeEntities(1, board.board_width // 2, board.board_height // 2)
+    entities = initializeEntities(levelNumber, board.board_width // 2, board.board_height // 2)
     print(entities)
     for entity in entities:
         if (isinstance(entity, characters.BadGuy)):
@@ -182,6 +186,7 @@ def loadLevel(levelNumber):
         player.set_position(newX, newY)
         player.set_offset((board.board_width // 2, board.board_height // 2))
         player._draw_self(PLAYER_COLOR)
+    screen.update()
 
 loadLevel(LEVEL)
 # these may be needed?
