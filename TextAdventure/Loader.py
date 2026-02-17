@@ -41,12 +41,18 @@ def initializeEntities(levelNumber, boardWidth, boardHeight):
     entityList = []
     with open(entityPath, "r") as fin:
         for line in fin.readlines():
-            entity, curHp, maxHp, x, y = line.split()
-            if (entity == 'bad'):
+            lineContent = line.split()
+            entity = lineContent[0]
+            if entity == 'bad':
+                curHp, maxHp, x, y = lineContent[1], lineContent[2], lineContent[3], lineContent[4]
                 t = turtle.Turtle()
                 badGuy = BadGuy(int(curHp), int(maxHp), int(x), int(y), [], [], t, (boardWidth, boardHeight), TILE_SIZE)
                 entityList.append(badGuy)
-            # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))       
+            # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))     
+            elif entity == 'paint':
+                # TODO
+                color, x, y = lineContent[1], lineContent[2], lineContent[3]
+                paintEntity = ...
     return entityList
 
 def loadPlayerPosition(levelNumber):

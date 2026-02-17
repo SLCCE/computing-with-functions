@@ -1,1 +1,2 @@
 bad 3 3 3 3
+paint blue 3 6
