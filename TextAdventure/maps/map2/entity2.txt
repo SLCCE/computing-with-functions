@@ -1,2 +1,3 @@
 bad 3 3 3 3
 paint purple 3 6
+gate purple 1 6

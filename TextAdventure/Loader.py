@@ -1,5 +1,5 @@
 # loading into the player's state:
-from characters import Character, Player, BadGuy, Paint
+from characters import Character, Player, BadGuy, Paint, Gate
 from board import Board
 from pathlib import Path
 
@@ -51,11 +51,15 @@ def initializeEntities(levelNumber, boardWidth, boardHeight, board: Board.Board)
                 board.get_tile(x, y).setEntity(badGuy)
             # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))     
             elif entity == 'paint':
-                # TODO
                 color, x, y = lineContent[1], lineContent[2], lineContent[3]
                 x, y = int(x), int(y)
                 paintEntity = Paint.Paint(color, x, y, TILE_SIZE, t, (boardWidth, boardHeight))
                 board.get_tile(x, y).setEntity(paintEntity)
+            elif entity == 'gate':
+                color, x, y = lineContent[1], lineContent[2], lineContent[3]
+                x, y = int(x), int(y)
+                gateEntity = Gate.Gate(color, x, y, TILE_SIZE, t, (boardWidth, boardHeight))
+                board.get_tile(x, y).setEntity(gateEntity)
 
 def loadPlayerPosition(levelNumber):
     project_root = Path(__file__).resolve().parent
