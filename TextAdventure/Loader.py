@@ -1,5 +1,6 @@
 # loading into the player's state:
-from characters import Character, Player, BadGuy
+from characters import Character, Player, BadGuy, Paint
+from board import Board
 from pathlib import Path
 
 import turtle
@@ -33,27 +34,28 @@ def initalizePlayer(boardWidth, boardHeight):
     print(p.inventory, p.equipment)
     return p
 
-def initializeEntities(levelNumber, boardWidth, boardHeight):
+def initializeEntities(levelNumber, boardWidth, boardHeight, board: Board.Board):
     project_root = Path(__file__).resolve().parent
     pathString = "maps/map" + str(levelNumber) + "/entity" + str(levelNumber) + ".txt"
 
     entityPath = (project_root / pathString).resolve()
-    entityList = []
     with open(entityPath, "r") as fin:
         for line in fin.readlines():
             lineContent = line.split()
             entity = lineContent[0]
+            t = turtle.Turtle()
             if entity == 'bad':
                 curHp, maxHp, x, y = lineContent[1], lineContent[2], lineContent[3], lineContent[4]
-                t = turtle.Turtle()
+                x, y = int(x), int(y)
                 badGuy = BadGuy(int(curHp), int(maxHp), int(x), int(y), [], [], t, (boardWidth, boardHeight), TILE_SIZE)
-                entityList.append(badGuy)
+                board.get_tile(x, y).setEntity(badGuy)
             # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))     
             elif entity == 'paint':
                 # TODO
                 color, x, y = lineContent[1], lineContent[2], lineContent[3]
-                paintEntity = ...
-    return entityList
+                x, y = int(x), int(y)
+                paintEntity = Paint.Paint(color, x, y, TILE_SIZE, t, (boardWidth, boardHeight))
+                board.get_tile(x, y).setEntity(paintEntity)
 
 def loadPlayerPosition(levelNumber):
     project_root = Path(__file__).resolve().parent

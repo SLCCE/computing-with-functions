@@ -78,7 +78,7 @@ class Board:
                 x = -self.board_width // 2 + j * self.square_size
                 y = -self.board_height // 2 + i * self.square_size
                 self.draw_square(x, y, self.boardState[i][j].getStatus())
-        
+      
     def draw_square(self, x, y, fill):
         if fill:
             if fill == 1:
@@ -128,7 +128,12 @@ class Board:
         turtle.end_fill()
         turtle.color("black")
 
-
+    def clear_entities(self):
+        for i in range(self.rows):
+            for j in range(self.cols):
+                ent = self.boardState[i][j].getEntity()
+                if ent:
+                    ent.t.clear()
 
 # test = [[1, 1, 1, 1, 1, 1, 1, 1],
 #         [1, 0, 0, 0, 0, 0, 0, 1],

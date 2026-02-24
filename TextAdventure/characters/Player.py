@@ -10,17 +10,17 @@ class Player(Character):
         
         # player position and settings
         self.tile_size = tile_size
-
-        self._draw_self("green")
+        self.color = "green"
+        self._draw_self()
     
     # Override from parent class
-    def _draw_self(self, color):
+    def _draw_self(self):
         self.t.clear()
         xDestination = self.position[1] * self.tile_size - self.offset[0] + self.tile_size // 2
         yDestination = self.position[0] * self.tile_size - self.offset[1] + self.tile_size // 4
         self.t.goto(xDestination, yDestination)
         self.t.pendown()
-        self.t.fillcolor(color)
+        self.t.fillcolor(self.color)
         self.t.begin_fill()
         self.t.circle(20)
         self.t.end_fill()

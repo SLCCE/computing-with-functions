@@ -1,2 +1,2 @@
 bad 3 3 3 3
-paint blue 3 6
+paint purple 3 6

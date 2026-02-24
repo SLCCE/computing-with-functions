@@ -1,4 +1,3 @@
-import turtle
 from .Character import Character
 # from item.HealthPotion import HealthPotion
 

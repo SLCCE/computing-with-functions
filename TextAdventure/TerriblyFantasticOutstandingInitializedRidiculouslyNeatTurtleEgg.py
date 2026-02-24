@@ -28,12 +28,8 @@ def state_checks():
     # print(board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus())
     if board.boardState[player.get_position()[0]][player.get_position()[1]].getStatus() == Tile.TileStatus.GOAL.value:
         status = Status.GOAL
-        for badGuy in badGuys:
-            badGuy.die()
         disableMovement()
         # print("going next level")
-    for badGuy in badGuys:
-        print(badGuy.position[0], badGuy.position[1])
     if (status == Status.DEAD):
         disableMovement()
     elif (status == Status.COMBAT):
@@ -45,6 +41,7 @@ def state_checks():
         print("reached goal")
         if LEVEL < 5:
             LEVEL += 1
+            board.clear_entities()
             loadLevel(LEVEL)
             status = Status.MOVE
             enableMovement()
@@ -53,17 +50,21 @@ def state_checks():
             # FUTURE TASK: REDIRECT TO "YOU WIN" SCREEN
             print("You win!")
 
-    for badGuy in badGuys:
-        if badGuy.get_position() == player.get_position():
+    curEntity = board.boardState[player.get_position()[0]][player.get_position()[1]].getEntity()
+    print(player.get_position()[0], player.get_position()[1], curEntity)
+    if curEntity:
+        if isinstance(curEntity, characters.BadGuy):
             # Enter combat
             status = Status.COMBAT
-            enemy = badGuy
+            enemy = curEntity
             # Disable movement
             disableMovement()
             # Enable attack
             screen.onkey(attack, 'space')
             print("In Combat")
-    
+        elif isinstance(curEntity, characters.Paint.Paint):
+            # print("WE ARE ON PAINT")
+            player.color = curEntity.getColor()
     
 ####################################
 # COMBAT
@@ -77,10 +78,9 @@ def attack():
     enemy.set_hp(enemy_new_hp)
     if (enemy.get_hp() == 0):
         enemy.die()
+        board.boardState[player.get_position()[0]][player.get_position()[1]].setEntity(None)
         print("Enemy Defeated")
         status = Status.MOVE
-        enemyIndex = badGuys.index(enemy)
-        badGuys.pop(enemyIndex)
         state_checks()
         return
     player_new_hp = max(0, player.get_hp() - enemy.strength)
@@ -129,8 +129,9 @@ def move (direction):
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
             
-    player._draw_self(PLAYER_COLOR)
+    player._draw_self()
     state_checks()
+    player._draw_self()
     screen.update()
 
 def disableMovement():
@@ -159,23 +160,22 @@ screen = turtle.Screen()
 screen.tracer(0)
 
 # initialize to dummy values
-board, player, badGuys, loot, entities = -1, -1, -1, -1, -1
+board, player, loot = -1, -1, -1
 def loadLevel(levelNumber):
-    global board, player, badGuys, loot, entities
+    global board, player, loot
     # "maps/map1/map1.txt"
     mapPath = "maps/map" + str(levelNumber) + "/map" + str(levelNumber) + ".txt"
     print(mapPath)
     board = Board.Board(mapPath)
 
-    badGuys = []
     loot = []
-    entities = initializeEntities(levelNumber, board.board_width // 2, board.board_height // 2)
-    print(entities)
-    for entity in entities:
-        if (isinstance(entity, characters.BadGuy)):
-            badGuys.append(entity)
-        elif (isinstance(entity, items)):
-            loot.append(entity)
+    initializeEntities(levelNumber, board.board_width // 2, board.board_height // 2, board)
+    # deal with loot later
+    # for entity in entities:
+    #     if (isinstance(entity, characters.BadGuy)):
+    #         badGuys.append(entity)
+    #     elif (isinstance(entity, items)):
+    #         loot.append(entity)
     # draw the board first, then load the player in
     board.draw_board()
     if levelNumber == 1:
@@ -185,7 +185,7 @@ def loadLevel(levelNumber):
         # print(newX, newY)
         player.set_position(newX, newY)
         player.set_offset((board.board_width // 2, board.board_height // 2))
-        player._draw_self(PLAYER_COLOR)
+        player._draw_self()
     screen.update()
 
 loadLevel(LEVEL)

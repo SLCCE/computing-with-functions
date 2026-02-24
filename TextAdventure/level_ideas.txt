@@ -13,3 +13,4 @@ level 7 (endless) !?: self-explanatory, gets harder over time
 
 other ideas
 add fighting indicator for a frame or two
+puzzles mode!
