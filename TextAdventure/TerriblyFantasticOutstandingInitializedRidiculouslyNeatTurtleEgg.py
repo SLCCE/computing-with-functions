@@ -93,13 +93,33 @@ def attack():
 
 
 
-
+def checkGate(direction):
+    destinationRow, destinationCol = -1, -1
+    playerPos = player.get_position()
+    if direction == 'up':
+        destinationRow, destinationCol = playerPos[0] + 1, playerPos[1]
+    elif direction == 'down':
+        destinationRow, destinationCol = playerPos[0] - 1, playerPos[1]
+    elif direction == 'left':
+        destinationRow, destinationCol = playerPos[0], playerPos[1] - 1
+    else:
+        destinationRow, destinationCol = playerPos[0], playerPos[1] + 1
+    ent = board.get_tile(destinationRow, destinationCol).getEntity()
+    if isinstance(ent, characters.Gate.Gate):
+        if ent.getColor() != player.color: 
+            return True; 
+    return False
 
 ####################################
 # MOVEMENT
 ####################################
-def move (direction):
+def move(direction):
     playerPos = player.get_position()
+    # check if there's a gate
+    if checkGate(direction):
+        print("Need to be same color as gate to move through")
+        return
+    # check wall -- can move to function later ex. checkWall()
     if (direction == 'up'):
         goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):

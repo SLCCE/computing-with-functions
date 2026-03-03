@@ -15,7 +15,7 @@ class Gate:
         self.t.goto(self.y * self.size - self.offset[0], self.x * self.size - self.offset[1])
         self.t.down()
         self.t.pensize(10)
-        self.t.fillcolor(self.color)
+        self.t.pencolor(self.color)
         self.t.left(45)
         self.t.fd(self.size * (2 ** 0.5))
 
