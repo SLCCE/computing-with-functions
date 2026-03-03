@@ -45,9 +45,14 @@ def initializeEntities(levelNumber, boardWidth, boardHeight, board: Board.Board)
             entity = lineContent[0]
             t = turtle.Turtle()
             if entity == 'bad':
-                curHp, maxHp, x, y = lineContent[1], lineContent[2], lineContent[3], lineContent[4]
-                x, y = int(x), int(y)
-                badGuy = BadGuy(int(curHp), int(maxHp), int(x), int(y), [], [], t, (boardWidth, boardHeight), TILE_SIZE)
+                if len(lineContent) == 5:
+                    curHp, maxHp, x, y = lineContent[1], lineContent[2], lineContent[3], lineContent[4]
+                    x, y = int(x), int(y)
+                    badGuy = BadGuy(int(curHp), int(maxHp), int(x), int(y), [], [], t, (boardWidth, boardHeight), TILE_SIZE)
+                else:
+                    curHp, maxHp, x, y, size = lineContent[1], lineContent[2], lineContent[3], lineContent[4], lineContent[5]
+                    x, y, size = int(x), int(y), int(size)
+                    badGuy = BadGuy(int(curHp), int(maxHp), int(x), int(y), [], [], t, (boardWidth, boardHeight), TILE_SIZE, size)
                 board.get_tile(x, y).setEntity(badGuy)
             # entityList.append((entity, int(curHp), int(maxHp), int(x), int(y)))     
             elif entity == 'paint':

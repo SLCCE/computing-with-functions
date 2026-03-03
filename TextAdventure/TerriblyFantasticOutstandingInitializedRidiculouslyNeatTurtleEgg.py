@@ -6,6 +6,7 @@ import items
 from Loader import initalizePlayer, initializeEntities, loadPlayerPosition
 from enum import Enum
 from board import Tile
+from items.Equipment import WeaponType
 
 LEVEL = 1
 # MAP_1_PATH = "maps/map1/map1.txt"
@@ -73,6 +74,8 @@ def attack():
     global status
     if status == Status.DEAD:
         return
+    # LEVEL 4 EXERCISE
+    player.equipment[WeaponType.SWORD] = 100
     print('Attacking')
     enemy_new_hp = max(0, enemy.get_hp() - player.get_strength())
     enemy.set_hp(enemy_new_hp)
@@ -84,6 +87,7 @@ def attack():
         state_checks()
         return
     if LEVEL == 3:
+        # LEVEL 3 EXERCISE
         for i in range(1):
             player_new_hp = max(0, player.get_hp() - enemy.strength)
             player.set_hp(player_new_hp)
@@ -128,6 +132,7 @@ def move(direction):
         return
     # check wall -- can move to function later ex. checkWall()
     if (direction == 'up'):
+        # Level 1 exercise
         goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_up()

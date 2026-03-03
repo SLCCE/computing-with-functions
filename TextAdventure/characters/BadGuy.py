@@ -2,14 +2,14 @@ from .Character import Character
 # from item.HealthPotion import HealthPotion
 
 class BadGuy(Character):
-    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset, tile_size=24):        
+    def __init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset, tile_size=24, size=10):        
         # initializing character for hp and inventory
         Character.__init__(self, current_hp, max_hp, start_x, start_y, startingInventory, startingEquipment, t, offset)
 
         self.tile_size = tile_size
         # self.goto(start_x * tile_size, start_y * tile_size)
         self.strength = 1
-
+        self.size = size
         self._draw_self("red")
     
     # Override from parent class
@@ -21,7 +21,7 @@ class BadGuy(Character):
         self.t.pendown()
         self.t.fillcolor(color)
         self.t.begin_fill()
-        self.t.circle(10)
+        self.t.circle(self.size)
         self.t.end_fill()
         self.t.penup()
     
