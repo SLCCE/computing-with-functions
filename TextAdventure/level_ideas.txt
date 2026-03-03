@@ -1,5 +1,5 @@
 level 1: enable moving up, needed to get to goal state
-level 2: purple gate, given a blue potion --> edit blue to purple
+level 2: purple gate, given blue paint --> edit blue to purple
     or tile that changes player color
 level 3: enemy has 1 strength but attacks 100 times (tests loop knowledge)
 level 4: toggle strength to defeat very high hp boss

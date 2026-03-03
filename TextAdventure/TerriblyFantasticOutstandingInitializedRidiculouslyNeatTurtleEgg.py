@@ -83,8 +83,15 @@ def attack():
         status = Status.MOVE
         state_checks()
         return
-    player_new_hp = max(0, player.get_hp() - enemy.strength)
-    player.set_hp(player_new_hp)
+    if LEVEL == 3:
+        for i in range(1):
+            player_new_hp = max(0, player.get_hp() - enemy.strength)
+            player.set_hp(player_new_hp)
+            print("You're being attacked!")
+    else:
+        player_new_hp = max(0, player.get_hp() - enemy.strength)
+        player.set_hp(player_new_hp)
+
     if (player.get_hp() == 0):
         player.die()
         print("Player Died")
