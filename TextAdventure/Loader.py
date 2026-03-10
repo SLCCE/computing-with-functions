@@ -1,5 +1,5 @@
 # loading into the player's state:
-from characters import Character, Player, BadGuy, Paint, Gate
+from characters import Character, Player, BadGuy, Paint, Gate, Egg
 from board import Board
 from pathlib import Path
 
@@ -65,6 +65,11 @@ def initializeEntities(levelNumber, boardWidth, boardHeight, board: Board.Board)
                 x, y = int(x), int(y)
                 gateEntity = Gate.Gate(color, x, y, TILE_SIZE, t, (boardWidth, boardHeight))
                 board.get_tile(x, y).setEntity(gateEntity)
+            elif entity == 'egg':
+                x, y = lineContent[1], lineContent[2]
+                x, y = int(x), int(y)
+                eggEntity = Egg.Egg(x, y, TILE_SIZE, t, (boardWidth, boardHeight))
+                board.get_tile(x, y).setEntity(eggEntity)
 
 def loadPlayerPosition(levelNumber):
     project_root = Path(__file__).resolve().parent

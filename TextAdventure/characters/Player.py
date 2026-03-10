@@ -29,6 +29,11 @@ class Player(Character):
     def get_strength(self):
         return self.equipment[WeaponType.SWORD]
     
+    def add_to_inventory(self, item):
+        # TODO: edit later when items
+        if len(self.inventory) < 9:
+            self.inventory.append(item)
+    
     # def use_item(self, item_index):
     #     if 0 <= item_index < len(self.inventory["items"]):
     #         item = self.inventory["items"][item_index]

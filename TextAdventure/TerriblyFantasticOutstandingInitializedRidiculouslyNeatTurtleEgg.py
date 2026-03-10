@@ -8,6 +8,10 @@ from enum import Enum
 from board import Tile
 from items.Equipment import WeaponType
 
+# OTHER EXERCISES
+# EXERCISE 2: map2/entity2.txt
+# EXERCISE 5: map5/map5.txt
+
 LEVEL = 1
 # MAP_1_PATH = "maps/map1/map1.txt"
 PLAYER_COLOR = 'green'
@@ -48,8 +52,12 @@ def state_checks():
             enableMovement()
         else:
             disableMovement()
-            # FUTURE TASK: REDIRECT TO "YOU WIN" SCREEN
-            print("You win!")
+            # FUTURE TASK: REDIRECT TO "YOU WIN" SCREEN            
+            if not any(isinstance(ent, characters.Egg.Egg) for ent in player.inventory):
+                print("You win!")
+            else:
+                # redirect to level 6: puzzle
+                print("To level 6!")
 
     curEntity = board.boardState[player.get_position()[0]][player.get_position()[1]].getEntity()
     print(player.get_position()[0], player.get_position()[1], curEntity)
@@ -66,6 +74,14 @@ def state_checks():
         elif isinstance(curEntity, characters.Paint.Paint):
             # print("WE ARE ON PAINT")
             player.color = curEntity.getColor()
+        elif isinstance(curEntity, characters.Egg.Egg):
+            print("WE ARE ON EGG")
+            # add to inventory
+            player.add_to_inventory(curEntity)
+            # clear on frontend
+            curEntity.clear()
+            # clear on backend
+            board.boardState[player.get_position()[0]][player.get_position()[1]].setEntity(None)
     
 ####################################
 # COMBAT
