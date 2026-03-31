@@ -54,7 +54,7 @@ def state_checks():
             disableMovement()
             # FUTURE TASK: REDIRECT TO "YOU WIN" SCREEN            
             if not any(isinstance(ent, characters.Egg.Egg) for ent in player.inventory):
-                print("You win!")
+                print("You win! But you missed a secret.")
             else:
                 # redirect to level 6: puzzle
                 print("To level 6!")
