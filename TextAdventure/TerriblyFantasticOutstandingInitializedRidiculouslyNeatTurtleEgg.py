@@ -1,4 +1,6 @@
 import turtle
+import time
+import random
 
 from board import Board
 import characters
@@ -16,6 +18,9 @@ LEVEL = 1
 # MAP_1_PATH = "maps/map1/map1.txt"
 PLAYER_COLOR = 'green'
 enemy = None
+# Single turtle to draw any animations. Avoids the creation of many turtles
+animationTurtle = turtle.Turtle()
+animationTurtle.hideturtle()
 
 class Status(Enum):
     ERROR = -1
@@ -93,6 +98,7 @@ def attack():
     # LEVEL 4 EXERCISE
     player.equipment[WeaponType.SWORD] = 100
     print('Attacking')
+    playerAttackAnimation()
     enemy_new_hp = max(0, enemy.get_hp() - player.get_strength())
     enemy.set_hp(enemy_new_hp)
     if (enemy.get_hp() == 0):
@@ -117,6 +123,48 @@ def attack():
         print("Player Died")
         status = Status.DEAD
 
+def playerAttackAnimation():
+    """
+    Draws an hit markers around the player's current position then clears the hit markers after some time. 
+    """
+    print("Displaying attack animation")
+    # Size of the hit mark, with direct relation to the tile_size
+    markSize = player.tile_size * 0.15
+    # Get position of the player tile position, then get the screen position of the bottom edge of the tile
+    xPos = player.position[1] * player.tile_size - player.offset[0] + player.tile_size // 2
+    yPos = player.position[0] * player.tile_size - player.offset[1]
+
+    # Setup the turtle to begin drawing the hit marker
+    animationTurtle.penup()
+    # Make pensize a multiple of marksize so it scales well
+    animationTurtle.pensize(markSize * 0.1)
+    animationTurtle.pencolor('white')
+    # Set fill color to be player color
+    animationTurtle.fillcolor(player.color)
+    animationTurtle.goto(xPos, yPos)
+    animationTurtle.setheading(0)
+    # Get a random starting position centered around the player's tile
+    animationTurtle.circle(player.tile_size * 0.5, random.random() * 360)
+    # Position turtle at 3 points to draw individual hit markers
+    for i in range(3):
+        animationTurtle.begin_fill()
+        animationTurtle.pendown()
+        # Draw individual hit marker
+        for j in range(4):
+            animationTurtle.circle(markSize * 0.75, 180)
+            animationTurtle.left(90)
+        animationTurtle.end_fill()
+        animationTurtle.penup()
+        animationTurtle.circle(player.tile_size * 0.5, 120)
+
+    # Display the hit marker
+    screen.update()
+    # Wait then clear the hit marker
+    time.sleep(0.25)
+    animationTurtle.clear()
+    # Display the cleared hit marker
+    screen.update()
+        
 
 
 
