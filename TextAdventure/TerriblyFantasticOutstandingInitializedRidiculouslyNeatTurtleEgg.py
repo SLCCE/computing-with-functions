@@ -21,6 +21,9 @@ enemy = None
 # Single turtle to draw any animations. Avoids the creation of many turtles
 animationTurtle = turtle.Turtle()
 animationTurtle.hideturtle()
+turtle.mode("world")
+globalX = 0
+globalY = 0
 
 class Status(Enum):
     ERROR = -1
@@ -50,7 +53,7 @@ def state_checks():
     elif (status == Status.GOAL):
         print("reached goal")
         if LEVEL < 5:
-            LEVEL += 1
+            LEVEL += 1            
             board.clear_entities()
             loadLevel(LEVEL)
             status = Status.MOVE
@@ -195,6 +198,7 @@ def checkGate(direction):
 # MOVEMENT
 ####################################
 def move(direction):
+    global globalX, globalY
     playerPos = player.get_position()
     # check if there's a gate
     if checkGate(direction):
@@ -206,6 +210,8 @@ def move(direction):
         goalPos = board.get_tile(playerPos[0] + 1, playerPos[1])
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_up()
+            globalY += board.square_size
+            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -213,6 +219,8 @@ def move(direction):
         goalPos = board.get_tile(playerPos[0] - 1, playerPos[1])
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_down()
+            globalY -= board.square_size
+            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -220,6 +228,8 @@ def move(direction):
         goalPos = board.get_tile(playerPos[0], playerPos[1] + 1)
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_right()
+            globalX += board.square_size
+            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -227,6 +237,8 @@ def move(direction):
         goalPos = board.get_tile(playerPos[0], playerPos[1] - 1)
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_left()
+            globalX -= board.square_size
+            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -260,11 +272,14 @@ def doNothing ():
 ####################################
 screen = turtle.Screen()
 screen.tracer(0)
+# default: 600x600 centered at (0, 0)
+# screen.setworldcoordinates(-300, -300, 300, 300)
+# screen.setworldcoordinates(-280, -300, 320, 300)
 
 # initialize to dummy values
 board, player, loot = -1, -1, -1
 def loadLevel(levelNumber):
-    global board, player, loot
+    global board, player, loot, globalX, globalY
     # "maps/map1/map1.txt"
     mapPath = "maps/map" + str(levelNumber) + "/map" + str(levelNumber) + ".txt"
     print(mapPath)
@@ -287,19 +302,33 @@ def loadLevel(levelNumber):
         # print(newX, newY)
         player.set_position(newX, newY)
         player.set_offset((board.board_width // 2, board.board_height // 2))
+        # reset screen offset
+        print("PLAYER COORDS", player.t.xcor(), player.t.ycor())        
+        globalX = player.position[1] * player.tile_size - player.offset[0] + player.tile_size // 2
+        globalY = player.position[0] * player.tile_size - player.offset[1] + player.tile_size // 4
+            
+        print("PLAYER OFFSET", player.offset)
+        # player.t.pendown() 
+        # player.t.color("yellow")
+        # player.t.fillcolor("yellow")
+        # player.t.dot(50)
+        # screen.update()
+        # time.sleep(3)
+        # player.t.penup()
+        screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
         player._draw_self()
     screen.update()
 
 loadLevel(LEVEL)
 # these may be needed?
 screen.listen()
+# screen.setworldcoordinates(-300, -300, 300, 300)
 
 enableMovement()
 screen.onkey(doNothing, 'space')
 
-
-
+# time.sleep(3)
+# screen.setworldcoordinates(-280, -300, 320, 300)
 screen.mainloop()
 
 
-    
