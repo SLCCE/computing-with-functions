@@ -211,7 +211,6 @@ def move(direction):
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_up()
             globalY += board.square_size
-            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -220,7 +219,6 @@ def move(direction):
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_down()
             globalY -= board.square_size
-            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -229,7 +227,6 @@ def move(direction):
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_right()
             globalX += board.square_size
-            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
@@ -238,11 +235,11 @@ def move(direction):
         if (goalPos.getStatus() != Board.Tile.TileStatus.WALL.value):
             player.move_left()
             globalX -= board.square_size
-            screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
             print(f'Moving {direction} to {player.get_position()}')
         else:
             print(f'Goal Position is of type: {goalPos.getStatus()}')
-            
+
+    screen.setworldcoordinates(-300 + globalX, -300 + globalY, 300 + globalX, 300 + globalY)
     player._draw_self()
     state_checks()
     player._draw_self()
@@ -319,6 +316,7 @@ def loadLevel(levelNumber):
         player._draw_self()
     screen.update()
 
+turtle.setup(600, 600)
 loadLevel(LEVEL)
 # these may be needed?
 screen.listen()
